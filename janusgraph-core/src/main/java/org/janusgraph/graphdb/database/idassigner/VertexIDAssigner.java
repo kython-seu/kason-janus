@@ -117,7 +117,7 @@ public class VertexIDAssigner implements AutoCloseable {
             setLocalPartitionsToGlobal(partitionBits);
         } else {
             List<PartitionIDRange> partitionRanges = ImmutableList.of();
-            try {
+            try {//idAuthority.getLocalIDPartition() 从底层比如HBase里面获取分区范围
                 partitionRanges = PartitionIDRange.getIDRanges(partitionBits,idAuthority.getLocalIDPartition());
             } catch (Throwable e) {
                 log.error("Could not process local id partitions",e);

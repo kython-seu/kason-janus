@@ -30,7 +30,18 @@ public class GraphUtils {
     }
 
     public static void main(String[] args) {
-        new GraphUtils().init();
+        new GraphUtils().addOne();
+    }
+
+
+    public void addOne(){
+        JanusGraphTransaction tx = graph.newTransaction();
+        JanusGraphVertex fv = tx.addVertex(T.label, "person", "name", "david even", "age", 48, "rowKey", "3");
+        JanusGraphVertex dv = tx.addVertex(T.label, "person", "name", "lily even", "age", 24, "rowKey", "4");
+        JanusGraphEdge father1 = dv.addEdge("father", fv);
+        tx.commit();
+        tx.close();
+        graph.close();
     }
     
     public void init(){

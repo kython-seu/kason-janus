@@ -207,7 +207,7 @@ public class GraphCentricQueryBuilder implements JanusGraphQuery<GraphCentricQue
 
     public GraphCentricQuery constructQueryWithoutProfile(final ElementCategory resultType) {
         Preconditions.checkNotNull(resultType);
-        if (limit == 0) return GraphCentricQuery.emptyQuery(resultType);
+        if (limit == 0) return GraphCentricQuery.emptyQuery(resultType);//默认limit最大值
 
         //Prepare constraints
         And<JanusGraphElement> conditions = QueryUtil.constraints2QNF(tx, constraints);
@@ -267,9 +267,9 @@ public class GraphCentricQueryBuilder implements JanusGraphQuery<GraphCentricQue
                     subcover.add(equalCon.getKey());
                 }
 
-                if (index.isCompositeIndex()) {
+                if (index.isCompositeIndex()) {//hbase index query
                     subCondition = indexCover((CompositeIndexType) index,conditions,subcover);
-                } else {
+                } else {// es index query
                     subCondition = indexCover((MixedIndexType) index,conditions,serializer,subcover);
                     if (coveredClauses.isEmpty() && !supportsSort
                             && indexCoversOrder((MixedIndexType)index,orders)) supportsSort=true;
