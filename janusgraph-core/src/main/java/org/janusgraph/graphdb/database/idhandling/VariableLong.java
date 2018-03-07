@@ -40,14 +40,14 @@ public class VariableLong {
 
     private static final byte BIT_MASK = 127;
     private static final byte STOP_MASK = -128;
-
+//7位7位的讀出來
     private static long readUnsigned(ScanBuffer in) {
         long value = 0;
         byte b;
         do {
             b = in.getByte();
             value = value << 7 | (b & BIT_MASK);
-        } while (b >= 0);
+        } while (b >= 0);//最後一次讀的是個負數，專門做的標記爲
         return value;
     }
 
@@ -55,7 +55,7 @@ public class VariableLong {
     private static void writeUnsigned(WriteBuffer out, final long value) {
         writeUnsigned(out, unsignedBlockBitLength(value), value);
     }
-
+//value就是typeId， offset就是總共的位數， 用offset位來存儲value的值， 7個7個的存儲， 從高位往低位存儲
     private static void writeUnsigned(WriteBuffer out, int offset, final long value) {
         assert offset % 7 == 0;
         while (offset > 0) {

@@ -1,5 +1,7 @@
 package org.janusgraph.datacreate;
 
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.T;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.janusgraph.GraphHbaseApi;
@@ -30,7 +32,9 @@ public class GraphUtils {
     }
 
     public static void main(String[] args) {
-        new GraphUtils().addOne();
+
+        //new GraphUtils().addOne();
+        new GraphUtils().test(4160);
     }
 
 
@@ -70,6 +74,16 @@ public class GraphUtils {
         tx.commit();
         tx.close();
         graph.close();
+
+    }
+    
+    public void test(long id){
+        GraphTraversalSource g = graph.traversal();
+        GraphTraversal<Vertex, Object> name = g.V(id).values("name");
+        if(name.hasNext()){
+            String names = (String)name.next();
+            System.out.println(names);
+        }
 
     }
     

@@ -143,9 +143,11 @@ public class IDManagementTest {
 
     @Test
     public void edgeTypeIDTest() {
-        int partitionBits = 16;
+        //int partitionBits = 16;
+        int partitionBits = 5;
         IDManager eid = new IDManager(partitionBits);
-        int trails = 1000000;
+        //int trails = 1000000;
+        int trails = 1;
         assertEquals(eid.getPartitionBound(), (1L << partitionBits));
 
         Serializer serializer = new StandardSerializer();
@@ -154,7 +156,24 @@ public class IDManagementTest {
             long id;
             IDHandler.DirectionID dirID;
             RelationCategory type;
-            if (Math.random() < 0.5) {
+
+            id = IDManager.getSchemaId(IDManager.VertexIDType.UserEdgeLabel,count);
+            assertTrue(eid.isEdgeLabelId(id));
+            assertFalse(IDManager.isSystemRelationTypeId(id));
+            type = RelationCategory.EDGE;//type類型，代表是邊
+            /*if (Math.random() < 0.5)
+                dirID = IDHandler.DirectionID.EDGE_IN_DIR;
+            else
+                dirID = IDHandler.DirectionID.EDGE_OUT_DIR;*/
+            dirID = IDHandler.DirectionID.EDGE_IN_DIR;
+
+            //test property
+            /*type = RelationCategory.PROPERTY;
+            id = IDManager.getSchemaId(IDManager.VertexIDType.UserPropertyKey, count);//PropertyKey屬於系統Schema 不可見的， 沒有partitionId
+            assertTrue(eid.isPropertyKeyId(id));
+            assertFalse(IDManager.isSystemRelationTypeId(id));
+            dirID = IDHandler.DirectionID.PROPERTY_DIR;*/
+            /*if (Math.random() < 0.5) {
                 id = IDManager.getSchemaId(IDManager.VertexIDType.UserEdgeLabel,count);
                 assertTrue(eid.isEdgeLabelId(id));
                 assertFalse(IDManager.isSystemRelationTypeId(id));
@@ -169,9 +188,9 @@ public class IDManagementTest {
                 assertTrue(eid.isPropertyKeyId(id));
                 assertFalse(IDManager.isSystemRelationTypeId(id));
                 dirID = IDHandler.DirectionID.PROPERTY_DIR;
-            }
+            }*/
             assertTrue(eid.isRelationTypeId(id));
-
+//下面的這個代碼裏面調用了IDHandler.writeRelationType(b, relationTypeId, dirID, invisible);
             StaticBuffer b = IDHandler.getRelationType(id, dirID, false);
 //            System.out.println(dirID);
 //            System.out.println(getBinary(id));

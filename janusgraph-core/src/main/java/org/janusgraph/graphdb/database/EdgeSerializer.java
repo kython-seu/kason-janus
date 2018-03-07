@@ -242,9 +242,9 @@ public class EdgeSerializer implements RelationReader {
         long typeId = type.longId();
         DirectionID dirID = getDirID(dir, relation.isProperty() ? RelationCategory.PROPERTY : RelationCategory.EDGE);
 
-        DataOutput out = serializer.getDataOutput(DEFAULT_CAPACITY);
+        DataOutput out = serializer.getDataOutput(DEFAULT_CAPACITY);//底层调用的ByteBuffer
         int valuePosition;
-        IDHandler.writeRelationType(out, typeId, dirID, type.isInvisibleType());
+        IDHandler.writeRelationType(out, typeId, dirID, type.isInvisibleType());//～T$VertexExists 是true, 用户创建的是false
         Multiplicity multiplicity = type.multiplicity();
 
         long[] sortKey = type.getSortKey();

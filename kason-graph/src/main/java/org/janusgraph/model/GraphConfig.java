@@ -9,7 +9,8 @@ public class GraphConfig {
 
         HBASE_ADDR("192.168.1.105"),
         ES_ADDR("192.168.1.105:9200"),
-        TABLE_NAME("graph");
+        TABLE_NAME("test3");
+        //TABLE_NAME("graph");
         private String data;
 
         Config(String data){

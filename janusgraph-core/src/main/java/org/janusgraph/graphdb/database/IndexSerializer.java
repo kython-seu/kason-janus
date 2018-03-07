@@ -155,12 +155,13 @@ public class IndexSerializer {
                 public KeyInformation.StoreRetriever get(final String store) {
                     if (indexes.get(store)==null) {
                         Preconditions.checkState(transaction!=null,"Retriever has not been initialized");
-                        final MixedIndexType extIndex = getMixedIndex(store, transaction);
+                        final MixedIndexType extIndex = getMixedIndex(store, transaction);//实际上是经过JanusGraphSchemaVertex转化而来， 比如name 属性定点， PropertyKeyVertex
                         assert extIndex.getBackingIndexName().equals(index);
                         ImmutableMap.Builder<String,KeyInformation> b = ImmutableMap.builder();
-                        for (ParameterIndexField field : extIndex.getFieldKeys()) b.put(key2Field(field),getKeyInformation(field));
+                        //key2Field(field) 获取属性的名字， 如果名字为空， 则使用属性从属的顶点vertexId 转化的编码值作为key2field的值
+                        for (ParameterIndexField field : extIndex.getFieldKeys()) b.put(key2Field(field),getKeyInformation(field));//getKeyInformation(field) 返回StandardKeyInformation， 它包含了cardinality,datatype,parameter（键值对数组）
                         final ImmutableMap<String,KeyInformation> infoMap = b.build();
-                        final KeyInformation.StoreRetriever storeRetriever = infoMap::get;
+                        final KeyInformation.StoreRetriever storeRetriever = infoMap::get;//这就是个lamda表达式， 后期可以使用这个lamba表达式
                         indexes.put(store,storeRetriever);
                     }
                     return indexes.get(store);

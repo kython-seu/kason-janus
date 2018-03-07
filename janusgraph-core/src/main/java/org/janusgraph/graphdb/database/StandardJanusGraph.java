@@ -574,11 +574,11 @@ public class StandardJanusGraph extends JanusGraphBlueprintsGraph {
         //5) Add relation mutations
         for (Long vertexId : mutations.keySet()) {
             Preconditions.checkArgument(vertexId > 0, "Vertex has no id: %s", vertexId);
-            final List<InternalRelation> edges = mutations.get(vertexId);
+            final List<InternalRelation> edges = mutations.get(vertexId);//key是点的vertexId， value是InternalRelation集合， 也就是vp 和 edge的集合
             final List<Entry> additions = new ArrayList<>(edges.size());
             final List<Entry> deletions = new ArrayList<>(Math.max(10, edges.size() / 10));
             for (final InternalRelation edge : edges) {
-                final InternalRelationType baseType = (InternalRelationType) edge.getType();
+                final InternalRelationType baseType = (InternalRelationType) edge.getType();//属性或者边从属的PropertyKeyVertex 或这EdgeLAbelVertex
                 assert baseType.getBaseType()==null;
 
                 for (InternalRelationType type : baseType.getRelationIndexes()) {

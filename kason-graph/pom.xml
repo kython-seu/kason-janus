@@ -21,6 +21,11 @@
     <dependencies>
         <dependency>
             <groupId>org.janusgraph</groupId>
+            <artifactId>janusgraph-hadoop-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.janusgraph</groupId>
             <artifactId>janusgraph-hbase-10</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -102,7 +107,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <scope>test</scope>
+
         </dependency>
     </dependencies>
 </project>

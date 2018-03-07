@@ -564,12 +564,12 @@ public class ElasticSearchIndex implements IndexProvider {
 
         final Map<String, Object> doc = new HashMap<>();
         for (final Map.Entry<String, Collection<IndexEntry>> add : unique.asMap().entrySet()) {
-            final KeyInformation keyInformation = information.get(add.getKey());
+            final KeyInformation keyInformation = information.get(add.getKey());//根据KeyInformation就可以知道cardinality,datatype,parameter
             final Object value;
             switch (keyInformation.getCardinality()) {
                 case SINGLE:
                     value = convertToEsType(Iterators.getLast(add.getValue().iterator()).value,
-                            Mapping.getMapping(keyInformation));
+                            Mapping.getMapping(keyInformation));//将value转换成ES的类型， 比如你是String则转成String等等
                     break;
                 case SET:
                 case LIST:

@@ -20,6 +20,7 @@ public class GraphSingle {
             .set("storage.backend", "hbase")
             .set("storage.hostname", GraphConfig.Config.HBASE_ADDR.getData())
             .set("index.search.backend", "elasticsearch")
+            .set("index.search.index-name", "kes")
             .set("index.search.hostname", GraphConfig.Config.ES_ADDR.getData())
             .set("index.search.elasticsearch.create.ext.number_of_shards", "3")
             .set("index.search.elasticsearch.create.ext.number_of_replicas", "0")
